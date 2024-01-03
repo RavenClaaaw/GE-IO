@@ -1,11 +1,15 @@
 package io;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class PayrollService {
-    private List<EmployeePayroll> employeePayrollList;
+    private ArrayList<EmployeePayroll> employeePayrollList;
 
     public PayrollService() {
         employeePayrollList = new ArrayList<>();
@@ -21,12 +25,20 @@ public class PayrollService {
         }
     }
 
+    public void writePayroll() throws IOException{
+        BufferedWriter writer = new BufferedWriter(new FileWriter("employee_payroll.txt"));
+        for(EmployeePayroll i : employeePayrollList){
+            writer.write(i.toString() + "\n");
+        }
+        writer.close();
+    }
+
     public static void main(String[] args) {
         PayrollService payrollService = new PayrollService();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n1. WRITE \n2. READ");
+            System.out.println("\n1. Add Employee \n2. Display Employee \n3. Write To File");
             System.out.print("ENTER:- ");
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -46,8 +58,20 @@ public class PayrollService {
                     payrollService.addEmployee(employeePayroll);
                     break;
             
-                default:
+                case 2:
                     payrollService.displayAllEmployees();
+                    break;
+
+                case 3:
+                    try {
+                        payrollService.writePayroll();
+                    } catch (IOException e) {
+                        System.out.println("ERROR GENERATED:- ");
+                        e.printStackTrace();
+                    }
+                    break;
+
+                default:
                     break;
             }
         }

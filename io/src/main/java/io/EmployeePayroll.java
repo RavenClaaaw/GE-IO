@@ -40,4 +40,8 @@ public class EmployeePayroll {
         System.out.println("Name: " + name);
         System.out.println("Salary: " + salary);
     }
+
+    public String toString(){
+        return this.id + " " + this.name + " " + this.salary;
+    }
 }
