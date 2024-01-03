@@ -33,12 +33,23 @@ public class PayrollService {
         writer.close();
     }
 
+    public void readPayroll() throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader("employee_payroll.txt"));
+        System.out.println("\nFile Contents:- ");
+        String line;
+        while((line = reader.readLine()) != null){
+            System.out.println(line);
+        }
+
+        reader.close();
+    }
+
     public static void main(String[] args) {
         PayrollService payrollService = new PayrollService();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n1. Add Employee \n2. Display Employee \n3. Write To File");
+            System.out.println("\n1. Add Employee \n2. Display Employee \n3. Write To File \n4. Read From File");
             System.out.print("ENTER:- ");
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -65,6 +76,15 @@ public class PayrollService {
                 case 3:
                     try {
                         payrollService.writePayroll();
+                    } catch (IOException e) {
+                        System.out.println("ERROR GENERATED:- ");
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case 4:
+                    try {
+                        payrollService.readPayroll();
                     } catch (IOException e) {
                         System.out.println("ERROR GENERATED:- ");
                         e.printStackTrace();
