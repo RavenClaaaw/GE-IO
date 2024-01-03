@@ -44,12 +44,24 @@ public class PayrollService {
         reader.close();
     }
 
+    public void readCount() throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader("employee_payroll.txt"));
+        String line;
+        int counter = 0;
+        while((line = reader.readLine()) != null){
+            counter += 1;
+        }
+        
+        System.out.println("\nTotal Entries:- " + (counter));
+        reader.close();
+    }
+
     public static void main(String[] args) {
         PayrollService payrollService = new PayrollService();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
-            System.out.println("\n1. Add Employee \n2. Display Employee \n3. Write To File \n4. Read From File");
+            System.out.println("\n1. Add Employee \n2. Display Employee \n3. Write To File \n4. Read From File \n5. Total Entries");
             System.out.print("ENTER:- ");
             int option = scanner.nextInt();
             scanner.nextLine();
@@ -85,6 +97,15 @@ public class PayrollService {
                 case 4:
                     try {
                         payrollService.readPayroll();
+                    } catch (IOException e) {
+                        System.out.println("ERROR GENERATED:- ");
+                        e.printStackTrace();
+                    }
+                    break;
+
+                case 5:
+                    try {
+                        payrollService.readCount();
                     } catch (IOException e) {
                         System.out.println("ERROR GENERATED:- ");
                         e.printStackTrace();
